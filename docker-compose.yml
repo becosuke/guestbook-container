@@ -4,13 +4,25 @@ services:
   guestbook-golang:
     image: "guestbook-golang"
     container_name: "guestbook-golang"
-    working_dir: "/go/src/github.com/becosuke/guestbook-api"
     environment:
       - "SYSTEM_ENV=local"
       - "SYSTEM_REDIS_HOST=guestbook-redis"
       - "SYSTEM_REDIS_PORT=6379"
     volumes:
       - "./api:/go/src/github.com/becosuke/guestbook-api:cached"
+    tty: "yes"
+
+  guestbook-node:
+    image: "node:13-alpine"
+    container_name: "guestbook-node"
+    environment:
+      - "SYSTEM_ENV=local"
+      - "NUXT_HOST=0.0.0.0"
+      - "NUXT_PORT=3000"
+    volumes:
+      - "./nuxt:/opt/guestbook-nuxt"
+    ports:
+      - "3000:3000"
     tty: "yes"
 
   guestbook-redis:
@@ -26,3 +38,5 @@ services:
       - "SYSTEM_ENV=local"
       - "SYSTEM_REDIS_HOST=guestbook-redis"
       - "SYSTEM_REDIS_PORT=6379"
+    ports:
+      - "8080:80"
