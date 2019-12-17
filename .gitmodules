@@ -1,6 +1,6 @@
-[submodule "api"]
-	path = api
-	url = git@github.com:becosuke/guestbook-api.git
-[submodule "nuxt"]
-	path = nuxt
+[submodule "guestbook-nuxt"]
+	path = guestbook-nuxt
 	url = git@github.com:becosuke/guestbook-nuxt.git
+[submodule "guestbook-api"]
+	path = guestbook-api
+	url = git@github.com:becosuke/guestbook-api.git
