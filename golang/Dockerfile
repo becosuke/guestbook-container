@@ -4,5 +4,3 @@ RUN apk add --no-cache git make
 
 RUN go get -u golang.org/x/lint/golint
 RUN go get -u golang.org/x/tools/cmd/godoc
-
-WORKDIR "/go/src/github.com/becosuke/guestbook-api"

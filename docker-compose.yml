@@ -9,7 +9,8 @@ services:
       - "SYSTEM_REDIS_HOST=guestbook-redis"
       - "SYSTEM_REDIS_PORT=6379"
     volumes:
-      - "./api:/go/src/github.com/becosuke/guestbook-api:cached"
+      - "./guestbook-api:/go/src/github.com/becosuke/guestbook-api:cached"
+    working_dir: "/go/src/github.com/becosuke/guestbook-api"
     tty: "yes"
 
   guestbook-node:
@@ -20,10 +21,19 @@ services:
       - "NUXT_HOST=0.0.0.0"
       - "NUXT_PORT=3000"
     volumes:
-      - "./nuxt:/opt/guestbook-nuxt"
+      - "./guestbook-nuxt:/opt/guestbook-nuxt:cached"
+    working_dir: "/opt/guestbook-nuxt"
+    tty: "yes"
+
+  guestbook-nginx:
+    image: "nginx:alpine"
+    container_name: "guestbook-nginx"
+    volumes:
+      - "./nginx/files/etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro"
     ports:
       - "3000:3000"
-    tty: "yes"
+      - "80:80"
+      - "8000:8000"
 
   guestbook-redis:
     image: "redis:alpine"
@@ -38,5 +48,3 @@ services:
       - "SYSTEM_ENV=local"
       - "SYSTEM_REDIS_HOST=guestbook-redis"
       - "SYSTEM_REDIS_PORT=6379"
-    ports:
-      - "8080:80"
